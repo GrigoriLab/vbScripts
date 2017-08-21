@@ -1,0 +1,64 @@
+set PATH=%PATH%;C:\Program Files\Oracle\VirtualBox
+vboxmanage clonehd "termin-disk1.vmdk" "new-termin-disk1_vmdk.vdi" --format vdi
+vboxmanage modifyhd "new-termin-disk1_vmdk.vdi" --resize 30720
+VBoxManage clonehd "new-termin-disk1_vmdk.vdi" "termin-disk1.vmdk" --format vmdk
+
+
+If your initial harddisk was cloened from another virtualbox, you may get an error like this:
+VBoxManage: error: Cannot register the hard disk 'disk01.vmdk' {eaed1256-a34f-4c2f-873b-62cc78c4be80} because a hard disk 'disk01.vmdk' with UUID {eeed1256-a32f-4c1f-813a-62dd78c4be80} already exists
+VBoxManage: error: Details: code NS_ERROR_INVALID_ARG (0x80070057), component VirtualBox, interface IVirtualBox, callee nsISupports
+VBoxManage: error: Context: "OpenMedium(Bstr(pszFilenameOrUuid).raw(), enmDevType, enmAccessMode, fForceNewUuidOnOpen, pMedium.asOutParam())" at line 178 of file VBoxManageDisk.cpp
+
+To fix this issue pop into a terminal and enter this command:
+
+vboxmanage internalcommands sethduuid ./disk01.vmdk
+
+
+
+
+
+Alternate Solution: Map the UNC path to an unused drive letter.
+
+C:\Users\PrimaryUser>net use Y: \\myServer\myShare 
+The command completed successfully.
+
+C:\Users\PrimaryUser>Y:
+
+Y:\>dir
+ Volume in drive Y is MYDRIVE
+ Volume Serial Number is 1234-5678
+
+ Directory of Y:\
+
+12/16/2015  11:18 AM    <DIR>          .
+12/16/2015  11:18 AM    <DIR>          ..
+               0 File(s)              0 bytes
+               2 Dir(s)  120,609,575,936 bytes free
+
+Y:\>C:
+
+C:\Users\PrimaryUser>net use /delete Y:
+Y: was deleted successfully.
+
+
+
+
+
+
+
+set PATH=%PATH%;C:\Program Files\Oracle\VirtualBox
+VBoxManage list runningvms
+
+
+If you open up Gnome Power management preferences, you can set what actions to take when the power button. If you set it to shut down, it will shut down gracefully when you press the virtual power button with the VBoxManage controlvm Ubuntu acpipowerbutton
+command.
+
+https://stackoverflow.com/questions/14620709/how-to-split-string-without-for-loop-in-batch-file
+
+Computer Configuration -> Windows settings -> Scripts -> Shutdown -> Properties -> Add
+If you want a batch script to run at Logoff, I found referencing the .bat file directly didn't work. 
+However, if I used C:\Windows\System32\cmd.exe as the Script Name and /C C:\path\to\batch\script.bat as the Script Parameters, it did.
+
+WARINING: The group policy startup and shutdown scipts not executed, when using fastboot (enabled by default in windows 8 and up). 
+In this case, only the restart or force shutdown (from command prompt) shut down really the computer. 
+In all other cases (start menu shutdown), the computer kernel hibernated, and revieved on boot, and GPO startup and shutdown scipts are ignored.
