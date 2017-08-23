@@ -3,7 +3,7 @@ set VM=ubuntu14
 set BACKUP_DIR=C:\BackupVM
 set REMOTE_DIR=Z:\localFolder\grigori
 
-@this will mount \\local_network\folder to a disk (e.g Z:)
+REM this will mount \\local_network\folder to a disk (e.g Z:)
 pushd \\local_network\folder
 
 For /f "tokens=1-4 delims=/ " %%a in ('date /t') do (set mydate=%%c-%%a-%%b)
