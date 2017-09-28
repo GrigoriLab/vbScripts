@@ -1,3 +1,4 @@
 @echo off
+set VM=ubuntu14
 set PATH=%PATH%;C:\Program Files\Oracle\VirtualBox
-VBoxManage modifyvm "ubuntu14" --vram 256
+VBoxManage modifyvm %VM%--vram 256

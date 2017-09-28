@@ -7,12 +7,11 @@ GOTO :eof
 
 :subroutine
  set str=%~1
- set "var1=%str: ="^&REM #%
- set "var2=%str:* =%"
+ set "name=%str: ="^&REM #%
+ set "uuid=%str:* =%"
  echo ******************Found VM******************
- echo Name: %var1%
- echo UUID: %var2%
+ echo Name: %name%
+ echo UUID: %uuid%
  echo ********************************************
- set UUID=%var2%
- VBoxManage controlvm %UUID% savestate
+ VBoxManage controlvm %uuid% savestate
  GOTO :eof
