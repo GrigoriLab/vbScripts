@@ -1,10 +1,10 @@
 @echo off
 set VM=ubuntu14
 set BACKUP_DIR=C:\BackupVM
-set REMOTE_DIR=Z:\localFolder\grigori
+set REMOTE_DIR=Z:\PosaTeam\grigori
 
-REM this will mount \\local_network\folder to a disk (e.g Z:)
-pushd \\local_network\folder
+REM this will mount \\tce-nas1\TCE to a disk (e.g Z:)
+pushd \\tce-nas1\TCE
 
 For /f "tokens=1-4 delims=/ " %%a in ('date /t') do (set mydate=%%c-%%a-%%b)
 For /f "tokens=1-2 delims=/:" %%a in ('time /t') do (set mytime=%%a%%b)
