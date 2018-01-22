@@ -4,7 +4,7 @@ for /f "skip=3" %%G IN ('vagrant status %machine% --machine-readable') DO if not
 rem echo %res%
 
 call :parse "%res%"
-goto :eof
+call :finishing
 
 :parse
 setlocal
@@ -17,17 +17,18 @@ for /F "tokens=1* delims=," %%f in ("%line%") do (
     if not "%%g" == "" call :parse "%%g"
 )
 endlocal
-goto :eof
+call :finishing
 
 :vagrantSSH
 vagrant ssh %machine%
-exit
+call :finishing
 
 :vagrantUP
 vagrant up %machine%
 call :vagrantSSH
-exit
+call :finishing
 
-:eof
+:finishing
+vagrant suspend %machine%
 exit
 
